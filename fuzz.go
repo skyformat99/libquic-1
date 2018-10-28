@@ -1,3 +1,5 @@
+// +build gofuzz
+
 /*
  * Copyright Go-IIoT (https://github.com/goiiot)
  *
@@ -14,17 +16,6 @@
  * limitations under the License.
  */
 
-package libquic
-
-func getUDPNetwork(quicNetwork string) string {
-	switch quicNetwork {
-	case "quic":
-		return "udp"
-	case "quic4":
-		return "udp4"
-	case "quic6":
-		return "udp6"
-	default:
-		return ""
-	}
+func Fuzz(data []byte) int {
+	return 1
 }
