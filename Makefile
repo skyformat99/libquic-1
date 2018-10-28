@@ -18,3 +18,6 @@ TEST_FLAGS=-v -count=1 -race -pkgdir=vendor -coverprofile=coverage.txt -covermod
 
 test:
 	go test ${TEST_FLAGS} -run=.
+
+ensure:
+	go mod download
