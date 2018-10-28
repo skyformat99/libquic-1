@@ -1,5 +1,7 @@
 # libquic (WIP)
 
+[![Build Status](https://travis-ci.com/goiiot/libquic.svg)](https://travis-ci.com/goiiot/libquic) [![GoDoc](https://godoc.org/github.com/goiiot/libquic?status.svg)](https://godoc.org/github.com/goiiot/libquic) [![GoReportCard](https://goreportcard.com/badge/goiiot/libquic)](https://goreportcard.com/report/github.com/goiiot/libquic) [![codecov](https://codecov.io/gh/goiiot/libquic/branch/master/graph/badge.svg)](https://codecov.io/gh/goiiot/libquic)
+
 QUIC library for golang (under heavy development)
 
 ## LICENSE
