@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: test
+.PHONY: test ensure style_check fmt
 
 TEST_FLAGS=-v -count=1 -race -coverprofile=coverage.txt -covermode=atomic
 
@@ -21,6 +21,9 @@ test:
 
 ensure:
 	go mod download
+
+style_check:
+	gofmt -s -e -d .
 
 fmt:
 	gofmt -s -w .

@@ -8,6 +8,7 @@ before_script:
   - make ensure
 
 script:
+  - make style_check
   - make test
 
 after_success:
