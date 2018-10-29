@@ -16,7 +16,9 @@
 
 package libquic
 
-import "net"
+import (
+	"net"
+)
 
 // listener implements net.Listener
 type listener struct {

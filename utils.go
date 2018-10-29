@@ -16,6 +16,19 @@
 
 package libquic
 
+import (
+	"encoding/binary"
+	"io"
+)
+
+func putUint16(d []byte, v uint16) {
+	binary.BigEndian.PutUint16(d[:], v)
+}
+
+func putUint32(d []byte, v uint32) {
+	binary.BigEndian.PutUint32(d[:], v)
+}
+
 func getUDPNetwork(quicNetwork string) string {
 	switch quicNetwork {
 	case "quic":
@@ -27,4 +40,18 @@ func getUDPNetwork(quicNetwork string) string {
 	default:
 		return ""
 	}
+}
+
+func encodeVarLenInt(n int, w io.ByteWriter) error {
+	if n < 0 || n > MaxVarLenInt {
+		return ErrVarLenIntTooLarge
+	}
+
+	if n == 0 {
+		w.WriteByte(0)
+		return nil
+	}
+
+	// TODO: implement variable length integer encoding
+	return nil
 }

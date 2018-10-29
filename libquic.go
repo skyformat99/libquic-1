@@ -15,3 +15,32 @@
  */
 
 package libquic
+
+// TransParamType transport parameter types
+type TransParamType = uint16
+
+// TransParams definition
+const (
+	TransParamInitialMaxStreamDataBidiLocal  TransParamType = 0x0000
+	TransParamInitialMaxData                 TransParamType = 0x0001
+	TransParamInitialMaxBidiStreams          TransParamType = 0x0002
+	TransParamIdleTimeout                    TransParamType = 0x0003
+	TransParamPreferredAddress               TransParamType = 0x0004
+	TransParamMaxPacketSize                  TransParamType = 0x0005
+	TransParamStatelessResetToken            TransParamType = 0x0006
+	TransParamAckDelayExponent               TransParamType = 0x0007
+	TransParamInitialMaxUniStreams           TransParamType = 0x0008
+	TransParamDisableMigration               TransParamType = 0x0009
+	TransParamInitialMaxStreamDataBidiRemote TransParamType = 0x000A
+	TransParamInitialMaxStreamDataUni        TransParamType = 0x000B
+	TransParamMaxAckDelay                    TransParamType = 0x000C
+	TransParamOriginalConnectionID           TransParamType = 0x000D
+)
+
+const (
+	// MaxVarLenInt defines maximum variable length integer can be encoded
+	MaxVarLenInt = 2<<62 - 1
+	// V1 represent quic version 1, which uses TLS as a cryptographic
+	// handshake protocol
+	V1 = 0x00000001
+)

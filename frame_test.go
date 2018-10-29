@@ -1,5 +1,3 @@
-// +build gofuzz
-
 /*
  * Copyright Go-IIoT (https://github.com/goiiot)
  *
@@ -17,7 +15,3 @@
  */
 
 package libquic
-
-func Fuzz(data []byte) int {
-	return 1
-}
