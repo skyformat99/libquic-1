@@ -14,42 +14,18 @@
  * limitations under the License.
  */
 
-package libquic
+package utils
 
 import (
-	"testing"
+	"encoding/binary"
 )
 
-func TestPutUint16(t *testing.T) {
-	buf := make([]byte, 2)
-	putUint16(buf, 0xAABB)
-	if buf[0] != 0xAA || buf[1] != 0xBB {
-		t.Fail()
-	}
+// PutUint16 wraps (network byte order) BigEndian.PutUint16
+func PutUint16(d []byte, v uint16) {
+	binary.BigEndian.PutUint16(d[:], v)
 }
 
-func TestPutUint32(t *testing.T) {
-	buf := make([]byte, 4)
-	putUint32(buf, 0xAABBCCDD)
-	if buf[0] != 0xAA || buf[1] != 0xBB || buf[2] != 0xCC || buf[3] != 0xDD {
-		t.Fail()
-	}
-}
-
-func TestGetUDPNetwork(t *testing.T) {
-	if getUDPNetwork("quic") != "udp" {
-		t.Fail()
-	}
-
-	if getUDPNetwork("quic4") != "udp4" {
-		t.Fail()
-	}
-
-	if getUDPNetwork("quic6") != "udp6" {
-		t.Fail()
-	}
-
-	if getUDPNetwork("q") != "" {
-		t.Fail()
-	}
+// PutUint32 wraps (network byte order) BigEndian.PutUint32
+func PutUint32(d []byte, v uint32) {
+	binary.BigEndian.PutUint32(d[:], v)
 }

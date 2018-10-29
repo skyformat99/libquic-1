@@ -14,44 +14,24 @@
  * limitations under the License.
  */
 
-package libquic
+package utils
 
-import (
-	"encoding/binary"
-	"io"
-)
+import "testing"
 
-func putUint16(d []byte, v uint16) {
-	binary.BigEndian.PutUint16(d[:], v)
-}
-
-func putUint32(d []byte, v uint32) {
-	binary.BigEndian.PutUint32(d[:], v)
-}
-
-func getUDPNetwork(quicNetwork string) string {
-	switch quicNetwork {
-	case "quic":
-		return "udp"
-	case "quic4":
-		return "udp4"
-	case "quic6":
-		return "udp6"
-	default:
-		return ""
-	}
-}
-
-func encodeVarLenInt(n int, w io.ByteWriter) error {
-	if n < 0 || n > MaxVarLenInt {
-		return ErrVarLenIntTooLarge
+func TestGetUDPNetwork(t *testing.T) {
+	if GetUDPNetwork("quic") != "udp" {
+		t.Fail()
 	}
 
-	if n == 0 {
-		w.WriteByte(0)
-		return nil
+	if GetUDPNetwork("quic4") != "udp4" {
+		t.Fail()
 	}
 
-	// TODO: implement variable length integer encoding
-	return nil
+	if GetUDPNetwork("quic6") != "udp6" {
+		t.Fail()
+	}
+
+	if GetUDPNetwork("q") != "" {
+		t.Fail()
+	}
 }

@@ -18,6 +18,8 @@ package libquic
 
 import (
 	"net"
+
+	"github.com/goiiot/libquic/uitls"
 )
 
 // listener implements net.Listener
@@ -52,7 +54,7 @@ func (l *listener) start() error {
 //
 // The network must be "quic", "quic4", "quic6"
 func Listen(network, address string) (net.Listener, error) {
-	udpNetwork := getUDPNetwork(network)
+	udpNetwork := utils.GetUDPNetwork(network)
 	pktConn, err := net.ListenPacket(udpNetwork, address)
 	if err != nil {
 		return nil, err

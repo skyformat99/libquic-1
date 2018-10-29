@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package libquic
+package common
 
-// PacketType defines quic long header packet type
-type PacketType = byte
-
-// PacketTypes for different packet
-//
-// the packet field of Version Negotiation packet is unused, which can be
-// randomly selected by the server
 const (
-	PacketTypeInitial     PacketType = 0x7F
-	PacketTypeRetry       PacketType = 0x7E
-	PacketTypeHandshake   PacketType = 0x7D
-	PacketType0RTTProtect PacketType = 0x7C
+	// MaxVarLenInt defines maximum variable length integer can be encoded
+	MaxVarLenInt = 2<<62 - 1
+	// V1 represent quic version 1, which uses TLS as a cryptographic
+	// handshake protocol
+	V1 = 0x00000001
 )

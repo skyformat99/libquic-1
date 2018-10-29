@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-package libquic
+package io
+
+import (
+	"io"
+)
+
+// BufferedReader is the combination of io.Reader and io.ByteReader
+type BufferedReader interface {
+	io.Reader
+	io.ByteReader
+}

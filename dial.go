@@ -20,6 +20,8 @@ import (
 	"context"
 	"net"
 	"time"
+
+	"github.com/goiiot/libquic/uitls"
 )
 
 // Dialer wraps net.Dialer for quic dial
@@ -64,7 +66,7 @@ func (d *Dialer) dial(network, address string) (net.Conn, error) {
 }
 
 func (d *Dialer) dialContext(ctx context.Context, network, address string) (net.Conn, error) {
-	udpProto := getUDPNetwork(network)
+	udpProto := utils.GetUDPNetwork(network)
 
 	if udpProto == "" {
 		return nil, &net.OpError{

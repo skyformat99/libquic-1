@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-package libquic
+package utils
+
+func GetUDPNetwork(quicNetwork string) string {
+	switch quicNetwork {
+	case "quic":
+		return "udp"
+	case "quic4":
+		return "udp4"
+	case "quic6":
+		return "udp6"
+	default:
+		return ""
+	}
+}

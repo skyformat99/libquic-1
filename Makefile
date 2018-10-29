@@ -14,10 +14,13 @@
 
 .PHONY: test
 
-TEST_FLAGS=-v -count=1 -race -pkgdir=vendor -coverprofile=coverage.txt -covermode=atomic
+TEST_FLAGS=-v -count=1 -race -coverprofile=coverage.txt -covermode=atomic
 
 test:
-	go test ${TEST_FLAGS} -run=.
+	go test ${TEST_FLAGS} ./...
 
 ensure:
 	go mod download
+
+fmt:
+	gofmt -s -w .

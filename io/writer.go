@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-package libquic
+package io
+
+import (
+	"io"
+)
+
+// BufferedWriter is the combination of io.Writer and io.ByteWriter
+type BufferedWriter interface {
+	io.Writer
+	io.ByteWriter
+}

@@ -36,11 +36,3 @@ const (
 	TransParamMaxAckDelay                    TransParamType = 0x000C
 	TransParamOriginalConnectionID           TransParamType = 0x000D
 )
-
-const (
-	// MaxVarLenInt defines maximum variable length integer can be encoded
-	MaxVarLenInt = 2<<62 - 1
-	// V1 represent quic version 1, which uses TLS as a cryptographic
-	// handshake protocol
-	V1 = 0x00000001
-)
