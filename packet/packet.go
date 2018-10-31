@@ -17,12 +17,12 @@
 package packet
 
 import (
-	"github.com/goiiot/libquic/io"
+	"bytes"
 )
 
 type packet interface {
-	EncodeTo(w io.BufferedWriter) error
-	Bytes() []byte
+	EncodeTo(w *bytes.Buffer) error
+	Payload() []byte
 }
 
 // Type defines quic long header packet type
@@ -38,3 +38,25 @@ const (
 	TypeHandshake   Type = 0x7D
 	Type0RTTProtect Type = 0x7C
 )
+
+type longHeaderPacket struct {
+	LongHeader
+	PacketID int
+}
+
+func (lhp *longHeaderPacket) encodeTo(w *bytes.Buffer) (err error) {
+	err = lhp.LongHeader.encodeTo(w)
+	// TODO: encode packet-id and payload
+	return
+}
+
+type shortHeaderPacket struct {
+	ShortHeader
+	PacketID int
+}
+
+func (shp *shortHeaderPacket) encodeTo(w *bytes.Buffer) (err error) {
+	err = shp.ShortHeader.encodeTo(w)
+	// TODO: encode packet-id and payload
+	return
+}

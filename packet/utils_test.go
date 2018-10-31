@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package io
+package packet
 
 import (
-	"io"
+	"testing"
 )
 
-// BufferedReader is the combination of io.Reader and io.ByteReader
-type BufferedReader interface {
-	io.Reader
-	io.ByteReader
+var decodedEncodedMap = map[int][]byte{
+	7023993: {0x6B, 0x2D, 0x79}, // 30 bit
+	7061767: {0x6B, 0xC1, 0x07}, // 30 bit
+}
+
+func TestDecodePacketID(t *testing.T) {
+
+}
+
+func TestEncodePacketID(t *testing.T) {
 }

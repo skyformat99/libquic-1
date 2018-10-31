@@ -14,19 +14,35 @@
  * limitations under the License.
  */
 
-package stream
+package packet
 
-// Type defines stream type
-type Type = byte
-
-// Type definitions of stream
-const (
-	TypeBidiClientInit  Type = 0x0
-	TypeBidiServerInit  Type = 0x1
-	TypeUnidiClientInit Type = 0x2
-	TypeUnidiServerInit Type = 0x3
+import (
+	"bytes"
 )
 
-const (
-	MaxStreamID = 1<<60 - 1
-)
+// Initial packet
+//
+// An Initial packet uses long headers with a type value of 0x7F.
+//
+// It carries the first CRYPTO frames sent by the client and server to perform
+// key exchange, and carries ACKs in either direction.
+type Initial struct {
+	LongHeader
+	Token []byte
+}
+
+func (i *Initial) EncodeTo(w *bytes.Buffer) error {
+	return nil
+}
+
+func (i *Initial) Payload() []byte {
+	return nil
+}
+
+func (i *Initial) Bytes() []byte {
+	return nil
+}
+
+func (i *Initial) Type() Type {
+	return TypeInitial
+}

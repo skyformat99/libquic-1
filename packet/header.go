@@ -17,36 +17,58 @@
 package packet
 
 import (
-	"github.com/goiiot/libquic/io"
+	"bytes"
+
+	"github.com/goiiot/libquic/common"
 )
 
 // LongHeader for quic invariant long header
 type LongHeader struct {
 	PacketType           Type
-	Version              uint32
-	dcil, scil           byte
-	DstConnID, SrcConnID []byte
+	Version              common.QuicVersion
+	DstConnID, SrcConnID common.ConnectionID
 }
 
-func (lh *LongHeader) EncodeTo(w io.BufferedWriter) error {
-	if err := w.WriteByte(lh.PacketType | 0x80); err != nil {
-		return err
+// encodeTo encode LongHeader to bytes
+func (lh *LongHeader) encodeTo(w *bytes.Buffer) (err error) {
+	if err = w.WriteByte(lh.PacketType | 0x80); err != nil {
+		return
 	}
 
-	// if err := w.Write()
-	return nil
+	_, err = w.Write([]byte{byte(lh.Version >> 24), byte(lh.Version >> 16), byte(lh.Version >> 8), byte(lh.Version)})
+	if err != nil {
+		return
+	}
+
+	if err = w.WriteByte(byte(lh.DstConnID.Len()-3)<<4 | byte(lh.DstConnID.Len()-3)); err != nil {
+		return
+	}
+
+	if _, err = w.Write(lh.DstConnID.Bytes()); err != nil {
+		return
+	}
+
+	if _, err = w.Write(lh.SrcConnID.Bytes()); err != nil {
+		return
+	}
+
+	return
 }
 
 // ShortHeader for quic invariant short header
 type ShortHeader struct {
-	DstConnID []byte
+	KeyPhase  bool
+	DstConnID common.ConnectionID
 }
 
-func (sh *ShortHeader) EncodeTo(w io.BufferedWriter) error {
-	if err := w.WriteByte(0x7F); err != nil {
+// encodeTo encode ShortHeader to bytes
+func (sh *ShortHeader) encodeTo(w *bytes.Buffer) (err error) {
+	flag := boolToByte(sh.KeyPhase) << 6
+	if err := w.WriteByte(0x07F & (0x30 | flag)); err != nil {
 		return err
 	}
 
-	_, err := w.Write(sh.DstConnID)
-	return err
+	_, err = w.Write(sh.DstConnID.Bytes())
+
+	return
 }

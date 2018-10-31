@@ -1,4 +1,9 @@
 /go.sum
 /coverage.txt
+/profile
+
 /.idea
 /.vscode
+
+*.out
+*.test

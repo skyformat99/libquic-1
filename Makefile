@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: test ensure style_check fmt
+.PHONY: test ensure style_check fmt bench_utils profile
 
-TEST_FLAGS=-v -count=1 -race -coverprofile=coverage.txt -covermode=atomic
+TEST_FLAGS = -v -count=1 -race -coverprofile=coverage.txt -covermode=atomic
+
+PROFILE_OUT_DIR = profile
+BENCH_FLAGS = -v -count=3 -benchmem -outputdir=${PROFILE_OUT_DIR} -cpuprofile=cpu.out -bench Benchmark*
 
 test:
 	go test ${TEST_FLAGS} ./...
@@ -23,7 +26,13 @@ ensure:
 	go mod download
 
 style_check:
-	gofmt -s -e -d .
+	gofmt -s -e -d . 1>&2
 
 fmt:
 	gofmt -s -w .
+
+bench_utils:
+	go test ${BENCH_FLAGS} ./utils
+
+profile:
+	go tool pprof -http localhost:8080 libquic.test ${PROFILE_OUT_DIR}/cpu.out

@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package io
+package utils
 
-import (
-	"io"
-)
-
-// BufferedWriter is the combination of io.Writer and io.ByteWriter
-type BufferedWriter interface {
-	io.Writer
-	io.ByteWriter
+var decodedEncodedMap = map[int][]byte{
+	37:                 {0x25},
+	15293:              {0x7B, 0xBD},
+	494878333:          {0x9D, 0x7F, 0x3E, 0x7D},
+	151288809941952652: {0xC2, 0x19, 0x7C, 0x5E, 0xFF, 0x14, 0xE8, 0x8C},
 }

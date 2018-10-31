@@ -14,18 +14,27 @@
  * limitations under the License.
  */
 
-package utils
+package packet
 
 import (
-	"encoding/binary"
+	"bytes"
 )
 
-// PutUint16 wraps (network byte order) BigEndian.PutUint16
-func PutUint16(d []byte, v uint16) {
-	binary.BigEndian.PutUint16(d[:], v)
+type HandShake struct {
 }
 
-// PutUint32 wraps (network byte order) BigEndian.PutUint32
-func PutUint32(d []byte, v uint32) {
-	binary.BigEndian.PutUint32(d[:], v)
+func (h *HandShake) EncodeTo(w *bytes.Buffer) error {
+	return nil
+}
+
+func (h *HandShake) Payload() []byte {
+	return nil
+}
+
+func (h *HandShake) Bytes() []byte {
+	return nil
+}
+
+func (h *HandShake) Type() Type {
+	return TypeInitial
 }

@@ -21,7 +21,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/goiiot/libquic/uitls"
+	"github.com/goiiot/libquic/utils"
 )
 
 // Dialer wraps net.Dialer for quic dial
@@ -34,12 +34,12 @@ type Dialer struct {
 // Known networks are "quic", "quic4" (IPv4-only), "quic6" (IPv6-only)
 //
 // Examples:
-//	Dial("quic", "golang.org:http")
-//	Dial("quic4", "192.0.2.1:http")
-//	Dial("quic", "198.51.100.1:80")
-//	Dial("quic6", "[2001:db8::1]:domain")
-//	Dial("quic", "[fe80::1%lo0]:53")
-//	Dial("quic", ":80")
+// 	Dial("quic", "golang.org:http")
+// 	Dial("quic4", "192.0.2.1:http")
+// 	Dial("quic", "198.51.100.1:80")
+// 	Dial("quic6", "[2001:db8::1]:domain")
+// 	Dial("quic", "[fe80::1%lo0]:53")
+// 	Dial("quic", ":80")
 //
 func Dial(network, address string) (net.Conn, error) {
 	var d Dialer

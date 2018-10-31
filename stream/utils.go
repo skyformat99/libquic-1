@@ -16,17 +16,19 @@
 
 package stream
 
-// Type defines stream type
-type Type = byte
+import (
+	"bytes"
 
-// Type definitions of stream
-const (
-	TypeBidiClientInit  Type = 0x0
-	TypeBidiServerInit  Type = 0x1
-	TypeUnidiClientInit Type = 0x2
-	TypeUnidiServerInit Type = 0x3
+	"github.com/goiiot/libquic/common"
+	"github.com/goiiot/libquic/utils"
 )
 
-const (
-	MaxStreamID = 1<<60 - 1
-)
+// EncodeStreamID encode stream with its type
+func EncodeStreamID(id uint64, typ Type, w *bytes.Buffer) error {
+	if id > MaxStreamID {
+		return common.ErrVarLenIntTooLarge
+	}
+
+	streamID := int((id << 2) | uint64(typ))
+	return utils.EncodeVarLenInt(streamID, w)
+}

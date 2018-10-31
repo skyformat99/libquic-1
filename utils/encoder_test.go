@@ -17,21 +17,28 @@
 package utils
 
 import (
+	"bytes"
 	"testing"
 )
 
-func TestPutUint16(t *testing.T) {
-	buf := make([]byte, 2)
-	PutUint16(buf, 0xAABB)
-	if buf[0] != 0xAA || buf[1] != 0xBB {
-		t.Fail()
+func BenchmarkEncodeVarLenInt(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	buf := &bytes.Buffer{}
+	for i := 0; i < b.N; i++ {
+		EncodeVarLenInt(151288809941952652, buf)
 	}
 }
 
-func TestPutUint32(t *testing.T) {
-	buf := make([]byte, 4)
-	PutUint32(buf, 0xAABBCCDD)
-	if buf[0] != 0xAA || buf[1] != 0xBB || buf[2] != 0xCC || buf[3] != 0xDD {
-		t.Fail()
+func TestEncodeVarLenInt(t *testing.T) {
+	for decoded, encoded := range decodedEncodedMap {
+		buf := &bytes.Buffer{}
+		if err := EncodeVarLenInt(decoded, buf); err != nil {
+			t.Errorf("encode var int failed")
+		} else {
+			if bytes.Compare(buf.Bytes(), encoded) != 0 {
+				t.Errorf("result: %v, target: %v", buf.Bytes(), encoded)
+			}
+		}
 	}
 }

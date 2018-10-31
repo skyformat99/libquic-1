@@ -14,37 +14,4 @@
  * limitations under the License.
  */
 
-package utils
-
-import (
-	"io"
-
-	. "github.com/goiiot/libquic/common"
-)
-
-func encodePktLenInt(n int, w io.ByteWriter) error {
-	if n < 0 || n > MaxVarLenInt {
-		return ErrVarLenIntTooLarge
-	}
-	if n == 0 {
-		w.WriteByte(0)
-		return nil
-	}
-
-	// TODO: implement variable length integer encoding for packet number
-	return nil
-}
-
-func encodeVarLenInt(n int, w io.ByteWriter) error {
-	if n < 0 || n > MaxVarLenInt {
-		return ErrVarLenIntTooLarge
-	}
-
-	if n == 0 {
-		w.WriteByte(0)
-		return nil
-	}
-
-	// TODO: implement variable length integer encoding
-	return nil
-}
+package crypto

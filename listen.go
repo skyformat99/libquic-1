@@ -19,7 +19,7 @@ package libquic
 import (
 	"net"
 
-	"github.com/goiiot/libquic/uitls"
+	"github.com/goiiot/libquic/utils"
 )
 
 // listener implements net.Listener

@@ -14,19 +14,33 @@
  * limitations under the License.
  */
 
-package stream
+package utils
 
-// Type defines stream type
-type Type = byte
-
-// Type definitions of stream
-const (
-	TypeBidiClientInit  Type = 0x0
-	TypeBidiServerInit  Type = 0x1
-	TypeUnidiClientInit Type = 0x2
-	TypeUnidiServerInit Type = 0x3
+import (
+	"bytes"
+	"testing"
 )
 
-const (
-	MaxStreamID = 1<<60 - 1
-)
+func BenchmarkDecodeVarLenInt(b *testing.B) {
+	buf := &bytes.Buffer{}
+	for i := 0; i < b.N; i++ {
+		buf.Write([]byte{0xC2, 0x19, 0x7C, 0x5E, 0xFF, 0x14, 0xE8, 0x8C})
+	}
+
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		DecodeVarLenInt(buf)
+	}
+}
+
+func TestDecodeVarLenInt(t *testing.T) {
+	for decoded, encoded := range decodedEncodedMap {
+		buf := bytes.NewBuffer(encoded)
+		result, err := DecodeVarLenInt(buf)
+		if err != nil || result != decoded {
+			t.Errorf("result: %v, target: %v", result, decoded)
+		}
+	}
+}

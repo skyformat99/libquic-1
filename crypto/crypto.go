@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-package encrypt
+package crypto
+
+// ICrypto abstracts the encryption layer for quic
+type ICrypto interface {
+}

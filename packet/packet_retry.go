@@ -14,19 +14,32 @@
  * limitations under the License.
  */
 
-package stream
+package packet
 
-// Type defines stream type
-type Type = byte
+import (
+	"bytes"
 
-// Type definitions of stream
-const (
-	TypeBidiClientInit  Type = 0x0
-	TypeBidiServerInit  Type = 0x1
-	TypeUnidiClientInit Type = 0x2
-	TypeUnidiServerInit Type = 0x3
+	"github.com/goiiot/libquic/common"
 )
 
-const (
-	MaxStreamID = 1<<60 - 1
-)
+type Retry struct {
+	LongHeader
+	OriginDstConnID common.ConnectionID
+	RetryToken      []byte
+}
+
+func (r *Retry) EncodeTo(w *bytes.Buffer) error {
+	return nil
+}
+
+func (r *Retry) Payload() []byte {
+	return nil
+}
+
+func (r *Retry) Bytes() []byte {
+	return nil
+}
+
+func (r *Retry) Type() Type {
+	return TypeInitial
+}
