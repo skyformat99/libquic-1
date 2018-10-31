@@ -41,5 +41,5 @@ func (r *Retry) Bytes() []byte {
 }
 
 func (r *Retry) Type() Type {
-	return TypeInitial
+	return TypeRetry
 }

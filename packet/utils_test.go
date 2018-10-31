@@ -17,17 +17,33 @@
 package packet
 
 import (
+	"bytes"
 	"testing"
 )
 
 var decodedEncodedMap = map[int][]byte{
-	7023993: {0x6B, 0x2D, 0x79}, // 30 bit
-	7061767: {0x6B, 0xC1, 0x07}, // 30 bit
+	7023993: {0xC0, 0x6B, 0x2D, 0x79}, // 30 bit
+	7061767: {0xC0, 0x6B, 0xC1, 0x07}, // 30 bit
 }
 
 func TestDecodePacketID(t *testing.T) {
-
+	for decoded, encoded := range decodedEncodedMap {
+		buf := bytes.NewBuffer(encoded)
+		if result, err := DecodePacketID(buf); err != nil {
+			t.Errorf("failed decode packet id: %v", err)
+		} else if result != decoded {
+			t.Errorf("result: %v, target: %v", result, decoded)
+		}
+	}
 }
 
 func TestEncodePacketID(t *testing.T) {
+	for decoded, encoded := range decodedEncodedMap {
+		buf := &bytes.Buffer{}
+		if err := EncodePacketID(decoded, buf); err != nil {
+			t.Errorf("failed decode packet id: %v", err)
+		} else if !bytes.Equal(buf.Bytes(), encoded) {
+			t.Errorf("result: %v, target: %v", buf.Bytes(), encoded)
+		}
+	}
 }

@@ -65,12 +65,13 @@ func DecodePacketID(r *bytes.Buffer) (int, error) {
 		return 0, err
 	}
 
-	if (b1|0x80)>>6 == 0 {
+	// 7 bit used for one byte length int
+	if b1>>7 == 0 {
 		return int(b1), nil
 	}
 
-	length := b1 >> 6
-	b1 &= 0xC0
+	length := 1 << (b1>>6 - 1)
+	b1 &= 0x3F
 
 	if b2, err = r.ReadByte(); err != nil {
 		return 0, err

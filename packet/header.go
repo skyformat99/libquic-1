@@ -64,8 +64,8 @@ type ShortHeader struct {
 // encodeTo encode ShortHeader to bytes
 func (sh *ShortHeader) encodeTo(w *bytes.Buffer) (err error) {
 	flag := boolToByte(sh.KeyPhase) << 6
-	if err := w.WriteByte(0x07F & (0x30 | flag)); err != nil {
-		return err
+	if err = w.WriteByte(0x07F & (0x30 | flag)); err != nil {
+		return
 	}
 
 	_, err = w.Write(sh.DstConnID.Bytes())

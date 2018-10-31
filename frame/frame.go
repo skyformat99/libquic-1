@@ -20,7 +20,7 @@ import (
 	"github.com/goiiot/libquic/common"
 )
 
-type frame interface {
+type Frame interface {
 	FrameType() Type
 }
 

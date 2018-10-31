@@ -18,6 +18,7 @@ package packet
 
 import (
 	"bytes"
+	"math/rand"
 
 	"github.com/goiiot/libquic/common"
 )
@@ -62,6 +63,7 @@ func (v *VersionNegotiation) Bytes() []byte {
 	return nil
 }
 
+// Type is not specified for VersionNegotiation packet, use random number
 func (v *VersionNegotiation) Type() Type {
-	return TypeInitial
+	return byte(rand.Int())
 }

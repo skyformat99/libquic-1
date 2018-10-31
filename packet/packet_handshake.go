@@ -20,21 +20,26 @@ import (
 	"bytes"
 )
 
-type HandShake struct {
+// Handshake packet
+type Handshake struct {
 }
 
-func (h *HandShake) EncodeTo(w *bytes.Buffer) error {
+// EncodeTo encode Handshake to buffer
+func (h *Handshake) EncodeTo(w *bytes.Buffer) error {
 	return nil
 }
 
-func (h *HandShake) Payload() []byte {
+// Payload get payload of Handshake packet
+func (h *Handshake) Payload() []byte {
 	return nil
 }
 
-func (h *HandShake) Bytes() []byte {
+// Bytes encoded for Handshake packet
+func (h *Handshake) Bytes() []byte {
 	return nil
 }
 
-func (h *HandShake) Type() Type {
-	return TypeInitial
+// Type of Handshake packet
+func (h *Handshake) Type() Type {
+	return TypeHandshake
 }

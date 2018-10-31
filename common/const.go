@@ -18,6 +18,7 @@ package common
 
 import (
 	"bytes"
+	"crypto/rand"
 	"errors"
 	"fmt"
 	"io"
@@ -33,20 +34,31 @@ const (
 )
 
 var (
+	// ErrInvalidConnectionID raised when connection's length not valid
 	ErrInvalidConnectionID = errors.New("invalid connection id, length should be in range(0, 4 - 18)")
 )
 
+// ConnectionID for large number manipulation
 type ConnectionID struct {
 	value [18]byte
 	len   byte
 }
 
-func (c *ConnectionID) SetFromReader(r *bytes.Buffer, len int) (err error) {
+// SetByRand
+func (c *ConnectionID) SetByRand() error {
+	n, err := rand.Read(c.value[:])
+	c.len = byte(n)
+	return err
+}
+
+// SetByReader read from a buffer and set value
+func (c *ConnectionID) SetByReader(r *bytes.Buffer, len int) (err error) {
 	_, err = io.ReadFull(r, c.value[:len])
 	return
 }
 
-func (c *ConnectionID) SetFromBytes(data []byte) error {
+// SetByBytes read from bytes and set value
+func (c *ConnectionID) SetByBytes(data []byte) error {
 	length := len(data)
 
 	if length == 0 {
@@ -65,8 +77,8 @@ func (c *ConnectionID) SetFromBytes(data []byte) error {
 	return nil
 }
 
-// SetID set connection id via multiple uint64 value
-func (c *ConnectionID) SetValue(value ...uint64) error {
+// SetByValue set connection id via multiple uint64 value
+func (c *ConnectionID) SetByValue(value ...uint64) error {
 	if len(value) > 3 || (len(value) == 3 && value[0] > (1<<(144-128)-1)) {
 		return ErrVarLenIntTooLarge
 	}
