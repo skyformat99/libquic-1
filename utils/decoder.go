@@ -21,7 +21,7 @@ import (
 )
 
 // DecodeVarLenInt decode variable length integer from io.Reader
-func DecodeVarLenInt(r *bytes.Buffer) (int, error) {
+func DecodeVarLenInt(r *bytes.Buffer) (uint64, error) {
 	var (
 		b1, b2, b3, b4, b5, b6, b7, b8 byte
 		err                            error
@@ -34,7 +34,7 @@ func DecodeVarLenInt(r *bytes.Buffer) (int, error) {
 	length := 1 << (b1 >> 6)
 	b1 &= 0x3F
 	if length == 1 {
-		return int(b1), nil
+		return uint64(b1), nil
 	}
 
 	if b2, err = r.ReadByte(); err != nil {
@@ -42,7 +42,7 @@ func DecodeVarLenInt(r *bytes.Buffer) (int, error) {
 	}
 
 	if length == 2 {
-		return int(uint64(b2) | uint64(b1)<<8), nil
+		return uint64(b2) | uint64(b1)<<8, nil
 	}
 
 	if b3, err = r.ReadByte(); err != nil {
@@ -54,7 +54,7 @@ func DecodeVarLenInt(r *bytes.Buffer) (int, error) {
 	}
 
 	if length == 4 {
-		return int(uint64(b4) | uint64(b3)<<8 | uint64(b2)<<16 | uint64(b1)<<24), nil
+		return uint64(b4) | uint64(b3)<<8 | uint64(b2)<<16 | uint64(b1)<<24, nil
 	}
 
 	if b5, err = r.ReadByte(); err != nil {
@@ -73,6 +73,6 @@ func DecodeVarLenInt(r *bytes.Buffer) (int, error) {
 		return 0, err
 	}
 
-	return int(uint64(b8) | uint64(b7)<<8 | uint64(b6)<<16 | uint64(b5)<<24 |
-		uint64(b4)<<32 | uint64(b3)<<40 | uint64(b2)<<48 | uint64(b1)<<56), nil
+	return uint64(b8) | uint64(b7)<<8 | uint64(b6)<<16 | uint64(b5)<<24 |
+		uint64(b4)<<32 | uint64(b3)<<40 | uint64(b2)<<48 | uint64(b1)<<56, nil
 }

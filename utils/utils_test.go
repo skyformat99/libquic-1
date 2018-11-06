@@ -16,7 +16,7 @@
 
 package utils
 
-var decodedEncodedMap = map[int][]byte{
+var decodedEncodedMap = map[uint64][]byte{
 	37:                 {0x25},
 	15293:              {0x7B, 0xBD},
 	494878333:          {0x9D, 0x7F, 0x3E, 0x7D},

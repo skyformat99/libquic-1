@@ -16,14 +16,6 @@
 
 package common
 
-import (
-	"bytes"
-	"crypto/rand"
-	"errors"
-	"fmt"
-	"io"
-)
-
 // QuicVersion the version type
 type QuicVersion = uint32
 
@@ -32,72 +24,3 @@ const (
 	// handshake protocol
 	V1 QuicVersion = 0x00000001
 )
-
-var (
-	// ErrInvalidConnectionID raised when connection's length not valid
-	ErrInvalidConnectionID = errors.New("invalid connection id, length should be in range(0, 4 - 18)")
-)
-
-// ConnectionID for large number manipulation
-type ConnectionID struct {
-	value [18]byte
-	len   byte
-}
-
-// SetByRand
-func (c *ConnectionID) SetByRand() error {
-	n, err := rand.Read(c.value[:])
-	c.len = byte(n)
-	return err
-}
-
-// SetByReader read from a buffer and set value
-func (c *ConnectionID) SetByReader(r *bytes.Buffer, len int) (err error) {
-	_, err = io.ReadFull(r, c.value[:len])
-	return
-}
-
-// SetByBytes read from bytes and set value
-func (c *ConnectionID) SetByBytes(data []byte) error {
-	length := len(data)
-
-	if length == 0 {
-		c.len = 0
-	}
-
-	if length < 4 || length > 18 {
-		return ErrInvalidConnectionID
-	}
-
-	for i, v := range data {
-		c.value[i] = v
-	}
-	c.len = byte(length)
-
-	return nil
-}
-
-// SetByValue set connection id via multiple uint64 value
-func (c *ConnectionID) SetByValue(value ...uint64) error {
-	if len(value) > 3 || (len(value) == 3 && value[0] > (1<<(144-128)-1)) {
-		return ErrVarLenIntTooLarge
-	}
-
-	return nil
-}
-
-func (c *ConnectionID) Equal(other *ConnectionID) bool {
-	return bytes.Equal(c.value[:c.len], other.value[:other.len])
-}
-
-func (c *ConnectionID) Bytes() []byte {
-	return c.value[:c.len]
-}
-
-func (c *ConnectionID) Len() int {
-	return int(c.len)
-}
-
-func (c *ConnectionID) String() string {
-	return fmt.Sprintf("%#x", c.Bytes())
-}

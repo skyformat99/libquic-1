@@ -46,9 +46,19 @@ const (
 	TypePathChallenge      Type = 0x0E
 	TypePathResponse       Type = 0x0F
 	TypeStream             Type = 0x10 // 0x10 - 0x17
+	TypeStreamMin          Type = TypeStream
+	TypeStream1            Type = 0x11
+	TypeStream2            Type = 0x12
+	TypeStream3            Type = 0x13
+	TypeStream4            Type = 0x14
+	TypeStream5            Type = 0x15
+	TypeStream6            Type = 0x16
+	TypeStream7            Type = 0x17
+	TypeStreamMax          Type = TypeStream7
 	TypeCrypto             Type = 0x18
 	TypeNewToken           Type = 0x19
 	TypeAck                Type = 0x1A // 0x1A - 0x1B
+	TypeAck1               Type = 0x1B
 )
 
 type Padding struct {
@@ -82,7 +92,7 @@ type ApplicationClose struct {
 	ReasonPhrase []byte
 }
 
-func (a *ApplicationClose) FrameType() Type {
+func (*ApplicationClose) FrameType() Type {
 	return TypeApplicationClose
 }
 
@@ -90,7 +100,7 @@ type MaxData struct {
 	MaxData uint64
 }
 
-func (a *MaxData) FrameType() Type {
+func (*MaxData) FrameType() Type {
 	return TypeMaxData
 }
 
@@ -99,21 +109,21 @@ type MaxStreamData struct {
 	MaxStreamData uint64
 }
 
-func (a *MaxStreamData) FrameType() Type {
+func (*MaxStreamData) FrameType() Type {
 	return TypeMaxStreamData
 }
 
 type MaxStreamID struct {
 }
 
-func (a *MaxStreamID) FrameType() Type {
+func (*MaxStreamID) FrameType() Type {
 	return TypeMaxStreamID
 }
 
 type Ping struct {
 }
 
-func (a *Ping) FrameType() Type {
+func (*Ping) FrameType() Type {
 	return TypePing
 }
 
@@ -121,7 +131,7 @@ type Blocked struct {
 	Offset uint64
 }
 
-func (a *Blocked) FrameType() Type {
+func (*Blocked) FrameType() Type {
 	return TypeBlocked
 }
 
@@ -130,7 +140,7 @@ type StreamBlocked struct {
 	Offset   uint64
 }
 
-func (a *StreamBlocked) FrameType() Type {
+func (*StreamBlocked) FrameType() Type {
 	return TypeStreamBlocked
 }
 
@@ -138,7 +148,7 @@ type StreamIDBlocked struct {
 	StreamID uint64
 }
 
-func (a *StreamIDBlocked) FrameType() Type {
+func (*StreamIDBlocked) FrameType() Type {
 	return TypeStreamIDBlocked
 }
 
@@ -148,7 +158,7 @@ type NewConnectionID struct {
 	StatelessResetToken [128]byte
 }
 
-func (a *NewConnectionID) FrameType() Type {
+func (*NewConnectionID) FrameType() Type {
 	return TypeNewConnectionID
 }
 
@@ -156,7 +166,7 @@ type RetireConnectionID struct {
 	SeqNum uint64
 }
 
-func (a *RetireConnectionID) FrameType() Type {
+func (*RetireConnectionID) FrameType() Type {
 	return TypeRetireConnectionID
 }
 
@@ -165,7 +175,7 @@ type StopSending struct {
 	AppErrCode uint16
 }
 
-func (a *StopSending) FrameType() Type {
+func (*StopSending) FrameType() Type {
 	return TypeStopSending
 }
 
@@ -187,7 +197,7 @@ type Ack struct {
 	ECN           *ECNSection
 }
 
-func (a *Ack) FrameType() Type {
+func (*Ack) FrameType() Type {
 	return TypeAck
 }
 
@@ -195,7 +205,7 @@ type PathChallenge struct {
 	Data [8]byte
 }
 
-func (a *PathChallenge) FrameType() Type {
+func (*PathChallenge) FrameType() Type {
 	return TypePathChallenge
 }
 
@@ -203,7 +213,7 @@ type PathResponse struct {
 	Data [8]byte
 }
 
-func (a *PathResponse) FrameType() Type {
+func (*PathResponse) FrameType() Type {
 	return TypePathResponse
 }
 
@@ -212,7 +222,7 @@ type NewToken struct {
 	Token []byte
 }
 
-func (a *NewToken) FrameType() Type {
+func (*NewToken) FrameType() Type {
 	return TypeNewToken
 }
 
@@ -222,7 +232,7 @@ type Stream struct {
 	StreamData []byte
 }
 
-func (a *Stream) FrameType() Type {
+func (*Stream) FrameType() Type {
 	return TypeStream
 }
 
@@ -231,6 +241,6 @@ type Crypto struct {
 	CryptoData []byte
 }
 
-func (a *Crypto) FrameType() Type {
+func (*Crypto) FrameType() Type {
 	return TypeCrypto
 }

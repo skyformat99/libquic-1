@@ -23,8 +23,9 @@ import (
 
 func BenchmarkEncodeVarLenInt(b *testing.B) {
 	b.ReportAllocs()
+	_buf := make([]byte, 8*b.N)
+	buf := bytes.NewBuffer(_buf)
 	b.ResetTimer()
-	buf := &bytes.Buffer{}
 	for i := 0; i < b.N; i++ {
 		EncodeVarLenInt(151288809941952652, buf)
 	}

@@ -6,6 +6,8 @@ QUIC library for golang (under heavy development)
 
 ## LICENSE
 
+[![GitHub license](https://img.shields.io/github/license/goiiot/libquic.svg)](https://github.com/goiiot/libquic/blob/master/LICENSE.txt)
+
 ```text
 Copyright Go-IIoT (https://github.com/goiiot)
 

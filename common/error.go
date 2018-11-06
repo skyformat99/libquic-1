@@ -43,3 +43,8 @@ const (
 	ErrProtocolViolation  ErrorType = 0xA
 	ErrInvalidMigration   ErrorType = 0xC
 )
+
+var (
+	// ErrInvalidConnectionID raised when connection's length not valid
+	ErrInvalidConnectionID = errors.New("invalid connection id, length should be in range(0, 4 - 18)")
+)

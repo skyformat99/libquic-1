@@ -31,7 +31,7 @@ const (
 )
 
 // EncodeVarLenInt encode integer to bytes
-func EncodeVarLenInt(n int, w *bytes.Buffer) (err error) {
+func EncodeVarLenInt(n uint64, w *bytes.Buffer) (err error) {
 	if n < 0 || n > maxVarLenInt {
 		return common.ErrVarLenIntTooLarge
 	}
