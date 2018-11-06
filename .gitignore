@@ -1,7 +1,9 @@
+
 /go.sum
 /coverage.txt
 /profile
 
+# editors
 /.idea
 /.vscode
 
