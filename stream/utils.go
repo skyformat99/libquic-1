@@ -29,6 +29,6 @@ func EncodeStreamID(id uint64, typ Type, w *bytes.Buffer) error {
 		return common.ErrVarLenIntTooLarge
 	}
 
-	streamID := int((id << 2) | uint64(typ))
+	streamID := uint64((id << 2) | uint64(typ))
 	return utils.EncodeVarLenInt(streamID, w)
 }
